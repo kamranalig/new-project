@@ -1,9 +1,11 @@
 import React from 'react';
-import Navbar from './component/Navbar';
+// import Navbar from './component/Navbar';
+import NavbarApp from './component/navbar/NavbarApp';
 function App() {
   return (
     <React.Fragment>
-    <Navbar/>
+      <NavbarApp/>
+    {/* <Navbar/> */}
     </React.Fragment>
   )
 }

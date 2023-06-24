@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layout, Space } from 'antd';
+import backImg from "./back.jpg"
 const { Header, Footer, Sider, Content } = Layout;
+
 
 const headerStyle = {
     textAlign: 'center',
@@ -41,7 +43,7 @@ const Navbar = () => {
       <Sider style={siderStyle}>Sider</Sider>
       <Layout>
         <Header style={headerStyle}>Header</Header>
-        <Content style={contentStyle}><img src="" alt="" /></Content>
+        <Content style={contentStyle}><img src={backImg} alt="" /></Content>
       </Layout>
     </Layout>
         <Footer style={footerStyle}>Footer</Footer>
