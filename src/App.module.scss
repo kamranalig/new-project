@@ -1,6 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "IntroSemiBold", "futura-pt", Helvetica, sans-serif;
+}
 .about{
+    background: rgb(219, 234, 204);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     padding-top: 60px;
+    .border_line{
+        margin-top: 6rem;
+        width: 2.8px;
+        background: linear-gradient(rgb(219, 234, 204), rgb(52, 87, 44), rgb(52, 87, 44));
+    }
 }

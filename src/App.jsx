@@ -1,16 +1,20 @@
 import React from 'react';
-// import Navbar from './component/Navbar';
+import styles from "./App.module.scss";
 import NavbarApp from './component/navbar/NavbarApp';
 import Sidebar from './component/sidebar/Sidebar';
-import styles from "./App.module.scss";
+import Footer from './component/footer/Footer';
+import Section from './component/section/Section';
 function App() {
   return (
     <React.Fragment>
-      <NavbarApp/>
+      <NavbarApp />
       <div className={styles.about}>
-      <Sidebar/>
+        <Sidebar />
+        <div className={styles.border_line}></div>
+        <Section/>
       </div>
-    {/* <Navbar/> */}
+      <Footer />
+
     </React.Fragment>
   )
 }

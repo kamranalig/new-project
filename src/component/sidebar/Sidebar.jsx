@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "./Sidebar.module.scss";
-import logo from "./logo.svg";
+import logo from "/logo.svg";
 const Sidebar = () => {
   return (
     <div className={styles.sidebar_wrapper}>
@@ -22,9 +22,9 @@ const Sidebar = () => {
                 </ul>
             </div>
             <div className={styles.side_footer}>
-                <p>ALISSA PENDORF</p>
-                <p>ENVIRONMENTAL EDUCATOR</p>
-                <p>education@discoverybynature.com</p>
+                <p className={styles.name}>ALISSA PENDORF</p>
+                <p className={styles.subtext}>ENVIRONMENTAL EDUCATOR</p>
+                <p className={styles.email}>education@discoverybynature.com</p>
             </div>
         </div>
         <div className={styles.border}></div>
