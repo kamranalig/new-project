@@ -50,28 +50,32 @@
                         font-weight: 800;
                         margin-bottom: 20px;
                     }
-                    p{
+
+                    p {
                         font-size: 0.8em;
-                       b{
-                        font-weight: 800;
-                       }
+
+                        b {
+                            font-weight: 800;
+                        }
                     }
                 }
             }
-            .card_footer{
+
+            .card_footer {
                 margin: 0;
                 text-align: right;
-line-height: 30px;
-color: white;
-position: relative;
-padding: 0.4em 20px 0.4em 0;
-background: rgb(42, 88, 39);
-span{
-    font-size: 15px;
-    font-weight: 600;
-    margin-left: 20px;
-    letter-spacing: 2px;
-}
+                line-height: 30px;
+                color: white;
+                position: relative;
+                padding: 0.4em 20px 0.4em 0;
+                background: rgb(42, 88, 39);
+
+                span {
+                    font-size: 15px;
+                    font-weight: 600;
+                    margin-left: 20px;
+                    letter-spacing: 2px;
+                }
             }
         }
     }
