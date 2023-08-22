@@ -1,26 +1,19 @@
-import React from 'react';
-// import styles from "./App.module.scss";
-// import NavbarApp from './component/navbar/NavbarApp';
-// import Sidebar from './component/sidebar/Sidebar';
-// import Footer from './component/footer/Footer';
-// import Section from './component/section/Section';
-// import Slider from "./slider/slider"
-import AppPopover from './component/popover/popover';
+import React, { useState } from "react";
+import { Navbar, NavbarBrand } from "reactstrap";
+import Menu from "./components/MenuComponent";
+import { DISHES } from "./shared/dishes";
 function App() {
+  const [dishes, setDishes] = useState(DISHES);
   return (
-    <React.Fragment>
-      {/* <NavbarApp />
-      <div className={styles.about}>
-        <Sidebar />
-        <div className={styles.border_line}></div>
-        <Section/>
-      </div>
-      <Footer /> */}
-      {/* <Slider/> */}
-     <AppPopover />
-
-    </React.Fragment>
-  )
+    <div className="App">
+      <Navbar dark color="primary">
+        <div className="container">
+          <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
+        </div>
+      </Navbar>
+      <Menu dishes={dishes} />
+    </div>
+  );
 }
 
 export default App;
