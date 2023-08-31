@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { render } from "react-dom";
+import React from "react";
+
 import {
   Card,
   CardImg,
@@ -13,13 +13,15 @@ const DishDetail = ({ dish }) => {
   const renderDish = (dish) => {
     if (dish != null) {
       return (
-        <Card>
-          <CardImg top src={dish.image} alt={dish.name} />
-          <CardBody>
-            <CardTitle>{dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
+        <div className="col-12 col-md-5 m-1">
+          <Card>
+            <CardImg width="100%" src={dish.image} alt={dish.name} />
+            <CardBody>
+              <CardTitle>{dish.name}</CardTitle>
+              <CardText>{dish.description}</CardText>
+            </CardBody>
+          </Card>
+        </div>
       );
     } else {
       return <div></div>;
@@ -30,23 +32,25 @@ const DishDetail = ({ dish }) => {
     if (comments == null) {
       return <div></div>;
     }
-    const comnt = comments.map((comment) => {
-      <li key={comment.id}>
-        <p>{comment.comment}</p>
-        <p>
-          --{comment.auther}, &nbsp;
-          {new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-          }).format(new Date(comment.date))}
-        </p>
-      </li>;
+    const cmnts = comments.map((comment) => {
+      return (
+        <li key={comment.id}>
+          <p>{comment.comment}</p>
+          <p>
+            -- {comment.author}, &nbsp;
+            {new Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "2-digit",
+            }).format(new Date(comment.date))}
+          </p>
+        </li>
+      );
     });
     return (
       <div className="col-12 col-md-5 m-1">
         <h2>Comments</h2>
-        <ul className="list-unstyles"></ul>
+        <ul className="list-unstyles">{cmnts}</ul>
       </div>
     );
   };
