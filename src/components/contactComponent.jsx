@@ -7,6 +7,7 @@ import {
   FormGroup,
   Label,
   Input,
+  FormFeedback,
   Col,
 } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -19,6 +20,12 @@ const Contact = () => {
     agree: false,
     contactType: "Tel.",
     message: "",
+    touched: {
+      firstname: false,
+      lastname: false,
+      telnum: false,
+      email: false,
+    },
   });
   const handleInputChange = (e) => {
     const target = e.target;
@@ -30,6 +37,51 @@ const Contact = () => {
       [name]: value,
     });
   };
+
+  const handleBlur = (field) => (evt) => {
+    setFormData({
+      ...formData,
+      touched: { ...formData.touched, [field]: true },
+    });
+  };
+
+  const validate = (firstname, lastname, telnum, email) => {
+    const errors = {
+      firstname: "",
+      lastname: "",
+      telnum: "",
+      email: "",
+    };
+
+    if (formData.touched.firstname && firstname.length < 3)
+      errors.firstname = "First Name should be >= 3 characters";
+    else if (formData.touched.firstname && firstname.length > 10)
+      errors.firstname = "First Name should be <= 10 characters";
+
+    if (formData.touched.lastname && lastname.length < 3)
+      errors.lastname = "Last Name should be >= 3 characters";
+    else if (formData.touched.lastname && lastname.length > 10)
+      errors.lastname = "Last Name should be <= 10 characters";
+
+    const reg = /^\d+$/;
+    if (formData.touched.telnum && !reg.test(telnum))
+      errors.telnum = "Tel. Number should contain only numbers";
+
+    if (
+      formData.touched.email &&
+      email.split("").filter((x) => x === "@").length !== 1
+    )
+      errors.email = "Email should contain a @";
+
+    return errors;
+  };
+
+  const errors = validate(
+    formData.firstname,
+    formData.lastname,
+    formData.telnum,
+    formData.email
+  );
 
   const handleSubmit = (event) => {
     console.log("Current State is: " + JSON.stringify(formData));
@@ -110,8 +162,12 @@ const Contact = () => {
                   name="firstname"
                   placeholder="First Name"
                   value={formData.firstname}
+                  valid={errors.firstname === ""}
+                  invalid={errors.firstname !== ""}
+                  onBlur={handleBlur("firstname")}
                   onChange={handleInputChange}
                 />
+                <FormFeedback>{errors.firstname}</FormFeedback>
               </Col>
             </FormGroup>
             <FormGroup row>
@@ -125,8 +181,12 @@ const Contact = () => {
                   name="lastname"
                   placeholder="Last Name"
                   value={formData.lastname}
+                  valid={errors.lastname === ""}
+                  invalid={errors.lastname !== ""}
+                  onBlur={handleBlur("lastname")}
                   onChange={handleInputChange}
                 />
+                <FormFeedback>{errors.lastname}</FormFeedback>
               </Col>
             </FormGroup>
             <FormGroup row>
@@ -140,8 +200,12 @@ const Contact = () => {
                   name="telnum"
                   placeholder="Tel. Number"
                   value={formData.telnum}
+                  valid={errors.telnum === ""}
+                  invalid={errors.telnum !== ""}
+                  onBlur={handleBlur("telnum")}
                   onChange={handleInputChange}
                 />
+                <FormFeedback>{errors.telnum}</FormFeedback>
               </Col>
             </FormGroup>
             <FormGroup row>
@@ -155,8 +219,12 @@ const Contact = () => {
                   name="email"
                   placeholder="Email"
                   value={formData.email}
+                  valid={errors.email === ""}
+                  invalid={errors.email !== ""}
+                  onBlur={handleBlur("email")}
                   onChange={handleInputChange}
                 />
+                <FormFeedback>{errors.email}</FormFeedback>
               </Col>
             </FormGroup>
             <FormGroup row>
