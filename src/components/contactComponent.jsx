@@ -11,13 +11,32 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 const Contact = () => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [telnum, setTelnum] = useState("");
-  const [email, setEmail] = useState("");
-  const [agree, setAgree] = useState(false);
-  const [contactType, setContactType] = useState("Tel.");
-  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    telnum: "",
+    email: "",
+    agree: false,
+    contactType: "Tel.",
+    message: "",
+  });
+  const handleInputChange = (e) => {
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    console.log("Current State is: " + JSON.stringify(formData));
+    alert("Current State is: " + JSON.stringify(formData));
+    event.preventDefault();
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -79,7 +98,7 @@ const Contact = () => {
           <h3>Send us your Feedback</h3>
         </div>
         <div className="col-12 col-md-9">
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <FormGroup row>
               <Label htmlFor="firstname" md={2}>
                 First Name
@@ -90,7 +109,8 @@ const Contact = () => {
                   id="firstname"
                   name="firstname"
                   placeholder="First Name"
-                  value={firstname}
+                  value={formData.firstname}
+                  onChange={handleInputChange}
                 />
               </Col>
             </FormGroup>
@@ -104,7 +124,8 @@ const Contact = () => {
                   id="lastname"
                   name="lastname"
                   placeholder="Last Name"
-                  value={lastname}
+                  value={formData.lastname}
+                  onChange={handleInputChange}
                 />
               </Col>
             </FormGroup>
@@ -118,7 +139,8 @@ const Contact = () => {
                   id="telnum"
                   name="telnum"
                   placeholder="Tel. Number"
-                  value={telnum}
+                  value={formData.telnum}
+                  onChange={handleInputChange}
                 />
               </Col>
             </FormGroup>
@@ -132,7 +154,8 @@ const Contact = () => {
                   id="email"
                   name="email"
                   placeholder="Email"
-                  value={email}
+                  value={formData.email}
+                  onChange={handleInputChange}
                 />
               </Col>
             </FormGroup>
@@ -140,13 +163,48 @@ const Contact = () => {
               <Col md={{ size: 6, offset: 2 }}>
                 <FormGroup check>
                   <Label check>
-                    <Input type="checkbox" name="agree" checked={agree} />
+                    <Input
+                      type="checkbox"
+                      name="agree"
+                      checked={formData.agree}
+                      onChange={handleInputChange}
+                    />
                     <strong>May we contact you?</strong>
                   </Label>
                 </FormGroup>
               </Col>
               <Col md={{ size: 3, offset: 1 }}>
-                <Input type="select" name="conta"></Input>
+                <Input
+                  type="select"
+                  name="contactType"
+                  value={formData.contactType}
+                  onChange={handleInputChange}
+                >
+                  <option>Tel.</option>
+                  <option>Email</option>
+                </Input>
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label htmlFor="message" md={2}>
+                Your Feedback
+              </Label>
+              <Col md={10}>
+                <Input
+                  type="textarea"
+                  id="message"
+                  name="message"
+                  rows="12"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md={{ size: 10, offset: 2 }}>
+                <Button type="submit" color="primary">
+                  Send Feedback
+                </Button>
               </Col>
             </FormGroup>
           </Form>
@@ -155,5 +213,4 @@ const Contact = () => {
     </div>
   );
 };
-
 export default Contact;
