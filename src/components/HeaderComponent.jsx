@@ -6,7 +6,6 @@ import {
   NavbarToggler,
   Collapse,
   NavItem,
-  Jumbotron,
   Button,
   Modal,
   ModalHeader,
@@ -85,7 +84,7 @@ const HeaderComponent = () => {
           </Collapse>
         </div>
       </Navbar>
-      <Jumbotron>
+      <div className="jumbotron">
         <div className="container">
           <div className="row row-header">
             <div className="col-12 col-sm-6">
@@ -98,7 +97,7 @@ const HeaderComponent = () => {
             </div>
           </div>
         </div>
-      </Jumbotron>
+      </div>
       <Modal isOpen={isModalOpen} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>Login</ModalHeader>
         <ModalBody>

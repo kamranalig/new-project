@@ -1,65 +1,66 @@
-import React, { useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment } from "../redux/ActionCreators";
+import Home from "./HomeComponent";
 import Menu from "./MenuComponent";
-import { DISHES } from "../shared/dishes";
-import DishDetail from "./DishDetail";
-import HeaderComponent from "./HeaderComponent";
-import FooterComponent from "./FooterComponent";
-import HomeComponent from "./HomeComponent";
-import Contact from "./contactComponent";
-import { COMMENTS } from "../shared/comments";
-import { PROMOTIONS } from "../shared/promotion";
-import { LEADERS } from "../shared/leader";
 import About from "./AboutComponent";
+import Contact from "./ContactComponent";
+import Header from "./HeaderComponent";
+import Footer from "./FooterComponent";
+import DishDetail from "./DishDetail";
 
-function Main() {
-  const [dishes, setDishes] = useState(DISHES);
-  const [comments, setComments] = useState(COMMENTS);
-  const [promotions, setPromotions] = useState(PROMOTIONS);
-  const [leaders, setLeaders] = useState(LEADERS);
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
-  const HomePage = () => {
-    return (
-      <HomeComponent
-        dish={dishes.filter((dish) => dish.featured)[0]}
-        promotion={promotions.filter((promo) => promo.featured)[0]}
-        leader={leaders.filter((leader) => leader.featured)[0]}
-      />
-    );
-  };
+const Main = () => {
+  const dispatch = useDispatch();
 
-  const AboutUsPage = () => {
-    return <About leaders={leaders} />;
-  };
+  const comments = useSelector((state) => state.comments);
+  const dishes = useSelector((state) => state.dishes);
+  const leaders = useSelector((state) => state.leaders);
+  const promotions = useSelector((state) => state.promotions);
 
-  const DishWithId = ({ match }) => {
-    return (
-      <DishDetail
-        dish={
-          dishes.filter(
-            (dish) => dish.id === parseInt(match.params.dishId, 10)
-          )[0]
-        }
-        comments={comments.filter(
-          (comment) => comment.dishId === parseInt(match.params.dishId, 10)
-        )}
-      />
-    );
-  };
+  const HomePage = () => (
+    <Home
+      dish={dishes.filter((dish) => dish.featured)[0]}
+      promotion={promotions.filter((promotion) => promotion.featured)[0]}
+      leader={leaders.filter((leader) => leader.featured)[0]}
+    />
+  );
+
+  const AboutUsPage = () => <About leaders={leaders} />;
+
+  const DishWithId = ({ match }) => (
+    <DishDetail
+      dish={
+        dishes.filter(
+          (dish) => dish.id === parseInt(match.params.dishId, 10)
+        )[0]
+      }
+      comments={comments.filter(
+        (comment) => comment.dishId === parseInt(match.params.dishId, 10)
+      )}
+      addComment={(dishId, rating, author, comment) =>
+        dispatch(addComment(dishId, rating, author, comment))
+      }
+    />
+  );
 
   return (
     <div>
-      <HeaderComponent />
+      <Header />
+
       <Switch>
         <Route path="/home" component={HomePage} />
-        <Route exact path="/menu" component={() => <Menu dishes={dishes} />} />
+        <Route exact path="/menu" render={() => <Menu dishes={dishes} />} />
         <Route path="/menu/:dishId" component={DishWithId} />
-        <Route path="/aboutus" component={AboutUsPage}></Route>
         <Route exact path="/contactus" component={Contact} />
+        <Route exact path="/aboutus" component={AboutUsPage} />
         <Redirect to="/home" />
       </Switch>
-      <FooterComponent />
+
+      <Footer />
     </div>
   );
-}
-export default Main;
+};
+
+export default withRouter(Main);

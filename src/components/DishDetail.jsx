@@ -20,7 +20,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const CommentForm = () => {
+const CommentForm = ({ dishId, addComment }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     rating: "",
@@ -38,9 +38,9 @@ const CommentForm = () => {
 
   const handleCommentFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Current State is: ", formData);
-    alert("Current State is: " + JSON.stringify(formData));
     setIsModalOpen(false);
+    addComment(dishId, formData.rating, formData.author, formData.comment);
+    console.log("Current State is: ", formData);
   };
 
   const toggleCommentFormModal = () => {
@@ -132,7 +132,7 @@ const RenderDish = ({ dish }) => {
   }
 };
 
-const RenderComments = ({ dish, comments }) => {
+const RenderComments = ({ comments, addComment, dishId }) => {
   if (comments == null) {
     return <div></div>;
   }
@@ -155,7 +155,7 @@ const RenderComments = ({ dish, comments }) => {
     <div className="col-12 col-md-5 m-1">
       <h4> Comments </h4>
       <ul className="list-unstyled">{cmnts}</ul>
-      <CommentForm dish={dish} comments={comments} />
+      <CommentForm dishId={dishId} addComment={addComment} />
     </div>
   );
 };
@@ -185,7 +185,11 @@ const DishDetail = (props) => {
 
       <div className="row">
         <RenderDish dish={props.dish} />
-        <RenderComments dish={props.dish} comments={props.comments} />
+        <RenderComments
+          comments={props.comments}
+          addComment={props.addComment}
+          dishId={props.dish.id}
+        />
       </div>
     </div>
   );
