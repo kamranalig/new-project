@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment } from "../redux/ActionCreators";
+import { addComment, fetchDishes } from "../redux/ActionCreators";
 import Home from "./HomeComponent";
 import Menu from "./MenuComponent";
 import About from "./AboutComponent";
@@ -19,9 +19,14 @@ const Main = () => {
   const leaders = useSelector((state) => state.leaders);
   const promotions = useSelector((state) => state.promotions);
 
+  useEffect(() => {
+    dispatch(fetchDishes());
+  }, [dispatch]);
   const HomePage = () => (
     <Home
-      dish={dishes.filter((dish) => dish.featured)[0]}
+      dishesLoading={dishes.isLoading}
+      dishesErrMess={dishes.errMess}
+      dish={dishes.dishes.filter((dish) => dish.featured)[0]}
       promotion={promotions.filter((promotion) => promotion.featured)[0]}
       leader={leaders.filter((leader) => leader.featured)[0]}
     />
@@ -31,8 +36,10 @@ const Main = () => {
 
   const DishWithId = ({ match }) => (
     <DishDetail
+      isLoading={dishes.isLoading}
+      errMess={dishes.errMess}
       dish={
-        dishes.filter(
+        dishes.dishes.filter(
           (dish) => dish.id === parseInt(match.params.dishId, 10)
         )[0]
       }
