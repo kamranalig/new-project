@@ -21,9 +21,9 @@ import logo from "/Assets/logo.png";
 const HeaderComponent = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const usernameRef = useRef(null);
-  const passwordRef = useRef(null);
-  const rememberRef = useRef(null);
+  const usernameRef = useRef("");
+  const passwordRef = useRef("");
+  const rememberRef = useRef("");
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
@@ -31,11 +31,12 @@ const HeaderComponent = () => {
     setIsModalOpen(!isModalOpen);
   };
   const handleLogin = (event) => {
+    event.preventDefault();
+
     toggleModal();
     alert(
       `Username: ${usernameRef.current.value} Password: ${passwordRef.current.value} Remember: ${rememberRef.current.checked}`
     );
-    event.preventDefault();
   };
 
   return (
@@ -101,33 +102,35 @@ const HeaderComponent = () => {
       <Modal isOpen={isModalOpen} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>Login</ModalHeader>
         <ModalBody>
-          <FormGroup onSubmit={handleLogin}>
-            <Label htmlFor="username">Username</Label>
-            <Input
-              type="text"
-              id="username"
-              name="username"
-              innerRef={usernameRef}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="username">Password</Label>
-            <Input
-              type="password"
-              id="Password"
-              name="password"
-              innerRef={passwordRef}
-            />
-          </FormGroup>
-          <FormGroup check>
-            <Label check>
-              <Input type="checkbox" name="remember" innerRef={rememberRef} />
-              Remember me
-            </Label>
-          </FormGroup>
-          <Button type="submit" value="submit" color="primary">
-            Login
-          </Button>
+          <Form onSubmit={handleLogin}>
+            <FormGroup>
+              <Label htmlFor="username">Username</Label>
+              <Input
+                type="text"
+                id="username"
+                name="username"
+                innerRef={usernameRef}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="username">Password</Label>
+              <Input
+                type="password"
+                id="Password"
+                name="password"
+                innerRef={passwordRef}
+              />
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type="checkbox" name="remember" innerRef={rememberRef} />
+                Remember me
+              </Label>
+            </FormGroup>
+            <Button type="submit" value="submit" color="primary">
+              Login
+            </Button>
+          </Form>
         </ModalBody>
       </Modal>
     </>
