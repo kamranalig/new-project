@@ -16,23 +16,22 @@ import DishDetail from "./DishDetail";
 
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
-const Main = () => {
+const Main = (props) => {
   const dispatch = useDispatch();
-
-  const comments = useSelector((state) => state.comments);
-  const dishes = useSelector((state) => state.dishes);
-  const leaders = useSelector((state) => state.leaders);
-  const promotions = useSelector((state) => state.promotions);
+  const { dishes, comments, leaders, promotions } = useSelector(
+    (state) => state
+  );
 
   useEffect(() => {
     dispatch(fetchDishes());
-    dispatch(fetchComments()), dispatch(fetchPromos());
+    dispatch(fetchComments());
+    dispatch(fetchPromos());
   }, [dispatch]);
   const HomePage = () => (
     <Home
+      dish={dishes.dishes.filter((dish) => dish.featured)[0]}
       dishesLoading={dishes.isLoading}
       dishesErrMess={dishes.errMess}
-      dish={dishes.dishes.filter((dish) => dish.featured)[0]}
       promotion={promotions.promotions.filter((promo) => promo.featured)[0]}
       promoLoading={promotions.isLoading}
       promoErrMess={promotions.errMess}
