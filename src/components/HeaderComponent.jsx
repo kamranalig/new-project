@@ -99,7 +99,10 @@ const HeaderComponent = () => {
         </div>
       </div>
       <Modal isOpen={isModalOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>Login</ModalHeader>
+        <ModalHeader toggle={toggleModal}>
+          Login
+          {/* <span className="fa fa fa-lg"></span> */}
+        </ModalHeader>
         <ModalBody>
           <Form onSubmit={handleLogin}>
             <FormGroup>

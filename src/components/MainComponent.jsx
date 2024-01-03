@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addComment,
+  postComment,
   fetchDishes,
   fetchComments,
   fetchPromos,
@@ -54,8 +54,8 @@ const Main = (props) => {
         (comment) => comment.dishId === parseInt(match.params.dishId, 10)
       )}
       commentsErrMess={comments.errMess}
-      addComment={(dishId, rating, author, comment) =>
-        dispatch(addComment(dishId, rating, author, comment))
+      postComment={(dishId, rating, author, comment) =>
+        dispatch(postComment(dishId, rating, author, comment))
       }
     />
   );
