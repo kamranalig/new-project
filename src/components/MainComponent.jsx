@@ -13,7 +13,7 @@ import Contact from "./ContactComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import DishDetail from "./DishDetail";
-
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 const Main = (props) => {
@@ -63,16 +63,18 @@ const Main = (props) => {
   return (
     <div>
       <Header />
-
-      <Switch>
-        <Route path="/home" component={HomePage} />
-        <Route exact path="/menu" render={() => <Menu dishes={dishes} />} />
-        <Route path="/menu/:dishId" component={DishWithId} />
-        <Route exact path="/contactus" component={Contact} />
-        <Route exact path="/aboutus" component={AboutUsPage} />
-        <Redirect to="/home" />
-      </Switch>
-
+      <TransitionGroup>
+        <CSSTransition key={props.location.key} classNames="page" timeout={300}>
+          <Switch>
+            <Route path="/home" component={HomePage} />
+            <Route exact path="/menu" render={() => <Menu dishes={dishes} />} />
+            <Route path="/menu/:dishId" component={DishWithId} />
+            <Route exact path="/contactus" component={Contact} />
+            <Route exact path="/aboutus" component={AboutUsPage} />
+            <Redirect to="/home" />
+          </Switch>
+        </CSSTransition>
+      </TransitionGroup>
       <Footer />
     </div>
   );
